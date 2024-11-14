@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Providers } from "./Providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -43,7 +45,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={GeistSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <AdminPanelLayout>
+            <Providers>{children}</Providers>
+          </AdminPanelLayout>
         </ThemeProvider>
       </body>
     </html>

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/hooks/use-sidebar";
 import { useStore } from "@/hooks/use-store";
 import { cn } from "@/lib/utils";
-import { PanelsTopLeft } from "lucide-react";
+import { Aperture } from "lucide-react";
 import Link from "next/link";
 
 export function Sidebar() {
@@ -34,8 +34,8 @@ export function Sidebar() {
           variant="link"
           asChild
         >
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <PanelsTopLeft className="w-6 h-6 mr-1" />
+          <Link href="/countries" className="flex items-center gap-2">
+            <Aperture className="w-6 h-6 mr-1" />
             <h1
               className={cn(
                 "font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300",
@@ -44,7 +44,7 @@ export function Sidebar() {
                   : "translate-x-0 opacity-100"
               )}
             >
-              Brand
+              Country Explorer
             </h1>
           </Link>
         </Button>

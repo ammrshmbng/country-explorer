@@ -1,6 +1,6 @@
 import Link from "next/link";
+import ReduxCounter from "@/components/ReduxCounter";
 
-import PlaceholderContent from "@/components/demo/placeholder-content";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import {
   Breadcrumb,
@@ -11,9 +11,9 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 
-export default function TagsPage() {
+export default function CategoriesPage() {
   return (
-    <ContentLayout title="Tags">
+    <ContentLayout title="Categories">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -22,18 +22,13 @@ export default function TagsPage() {
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
+          
           <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/dashboard">Dashboard</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Tags</BreadcrumbPage>
+            <BreadcrumbPage>Redux Counter</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <ReduxCounter />
     </ContentLayout>
   );
 }
