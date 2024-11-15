@@ -9,11 +9,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
-import Countries from "@/components/Countries";
+import PlaceholderContent from "@/components/demo/placeholder-content";
 
-export default function CountriesPage() {
+export default function CooperationListPage() {
   return (
-    <ContentLayout title="Countries">
+    <ContentLayout title="Categories">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -24,11 +24,11 @@ export default function CountriesPage() {
           <BreadcrumbSeparator />
           
           <BreadcrumbItem>
-            <BreadcrumbPage>Countries</BreadcrumbPage>
+            <BreadcrumbPage>cooperation list</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-     <Countries />
+      <PlaceholderContent />
     </ContentLayout>
   );
 }

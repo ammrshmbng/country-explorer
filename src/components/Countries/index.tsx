@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { SortAsc, SortDesc } from 'lucide-react'
 import Image from 'next/image'
+import { useGetCountriesQuery } from '@/lib/features/countriesSlice'
+import Link from "next/link";
 
 // Types
 type Country = {
@@ -23,27 +25,29 @@ type Country = {
 }
 
 // Data
-const countries: Country[] = [
-  { name: "United States", flag: "/placeholder.svg?height=40&width=60", capital: "Washington, D.C.", population: 331002651, currency: "USD", languages: ["English"], continent: "North America", area: 9833517, gdp: 21433225, independent: true },
-  { name: "Japan", flag: "/placeholder.svg?height=40&width=60", capital: "Tokyo", population: 126476461, currency: "JPY", languages: ["Japanese"], continent: "Asia", area: 377975, gdp: 5082465, independent: true },
-  { name: "France", flag: "/placeholder.svg?height=40&width=60", capital: "Paris", population: 67391582, currency: "EUR", languages: ["French"], continent: "Europe", area: 551695, gdp: 2715518, independent: true },
-  { name: "Brazil", flag: "/placeholder.svg?height=40&width=60", capital: "Brasília", population: 212559417, currency: "BRL", languages: ["Portuguese"], continent: "South America", area: 8515767, gdp: 1839758, independent: true },
-  { name: "South Africa", flag: "/placeholder.svg?height=40&width=60", capital: "Pretoria", population: 59308690, currency: "ZAR", languages: ["Afrikaans", "English", "Zulu"], continent: "Africa", area: 1221037, gdp: 351432, independent: true },
-  { name: "Australia", flag: "/placeholder.svg?height=40&width=60", capital: "Canberra", population: 25499884, currency: "AUD", languages: ["English"], continent: "Oceania", area: 7692024, gdp: 1392681, independent: true },
-]
+// const countries: Country[] = [
+//   { name: "United States", flag: "/placeholder.svg?height=40&width=60", capital: "Washington, D.C.", population: 331002651, currency: "USD", languages: ["English"], continent: "North America", area: 9833517, gdp: 21433225, independent: true },
+//   { name: "Japan", flag: "/placeholder.svg?height=40&width=60", capital: "Tokyo", population: 126476461, currency: "JPY", languages: ["Japanese"], continent: "Asia", area: 377975, gdp: 5082465, independent: true },
+//   { name: "France", flag: "/placeholder.svg?height=40&width=60", capital: "Paris", population: 67391582, currency: "EUR", languages: ["French"], continent: "Europe", area: 551695, gdp: 2715518, independent: true },
+//   { name: "Brazil", flag: "/placeholder.svg?height=40&width=60", capital: "Brasília", population: 212559417, currency: "BRL", languages: ["Portuguese"], continent: "South America", area: 8515767, gdp: 1839758, independent: true },
+//   { name: "South Africa", flag: "/placeholder.svg?height=40&width=60", capital: "Pretoria", population: 59308690, currency: "ZAR", languages: ["Afrikaans", "English", "Zulu"], continent: "Africa", area: 1221037, gdp: 351432, independent: true },
+//   { name: "Australia", flag: "/placeholder.svg?height=40&width=60", capital: "Canberra", population: 25499884, currency: "AUD", languages: ["English"], continent: "Oceania", area: 7692024, gdp: 1392681, independent: true },
+// ]
 
 // Components
 const CountryCard = ({ country }: { country: Country }) => (
-  <Card className="cursor-pointer hover:shadow-lg transition-shadow">
-    <CardHeader className="flex flex-row items-center gap-4">
-      <Image src={country.flag} alt={`${country.name} flag`} width={60} height={40} className="rounded" />
-      <CardTitle>{country.name}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="text-sm text-gray-500">{country.continent}</p>
-      <p className="text-sm text-gray-500">Population: {country.population.toLocaleString()}</p>
-    </CardContent>
-  </Card>
+  <Link href={`/country-details/${country.name}`}>
+    <Card className="cursor-pointer hover:shadow-lg transition-shadow h-full">
+      <CardHeader className="flex flex-row items-center gap-4">
+        <Image src={country.flag} alt={`${country.name} flag`} width={60} height={40} className="rounded" />
+        <CardTitle>{country.name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-gray-500">{country.continent}</p>
+        <p className="text-sm text-gray-500">Population: {country.population.toLocaleString()}</p>
+      </CardContent>
+    </Card>
+  </Link>
 )
 
 const SearchSort = ({
@@ -97,11 +101,20 @@ export default function CountryExplorer() {
   const [sortBy, setSortBy] = useState("name")
   const [sortOrder, setSortOrder] = useState("asc")
 
+  const { data:countries, isLoading, isError } = useGetCountriesQuery('countries')
+  
+
   // Memoized filtered countries
   const filteredCountries = useMemo(() => {
-    return countries
-      .filter(country => country.name.toLowerCase().includes(searchTerm.toLowerCase()))
-      .sort((a, b) => {
+    return countries?.map((country: any) => ({
+      name: country.name.common,
+      flag: country.flags.png,
+      capital: country.capital,
+      population: country.population,
+      continent: country.continents
+    })).slice(0, 10)
+      .filter((country: any) => country.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .sort((a: any, b: any) => {
         const aValue = a[sortBy as keyof Country]
         const bValue = b[sortBy as keyof Country]
         if (typeof aValue === 'string' && typeof bValue === 'string') {
@@ -112,7 +125,9 @@ export default function CountryExplorer() {
         }
         return 0
       })
-  }, [searchTerm, sortBy, sortOrder])
+  }, [searchTerm, sortBy, sortOrder, countries])
+
+  // console.log(filteredCountries)
 
   return (
     <div className="p-4  min-h-screen">
@@ -125,7 +140,7 @@ export default function CountryExplorer() {
         setSortOrder={setSortOrder}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredCountries.map((country) => (
+        {filteredCountries?.map((country: any) => (
           <CountryCard
             key={country.name}
             country={country}

@@ -1,8 +1,9 @@
 import {
-  Tag,
+  Flag,
   Globe,
   LucideIcon,
-  Calculator
+  Calculator,
+  Handshake
 } from "lucide-react";
 
 type Submenu = {
@@ -28,7 +29,7 @@ export function getMenuList(pathname: string): Group[] {
   return [
     
     {
-      groupLabel: "Contents",
+      groupLabel: "Menus",
       menus: [
        
         {
@@ -37,9 +38,14 @@ export function getMenuList(pathname: string): Group[] {
           icon: Globe
         },
         {
-          href: "/tags",
-          label: "Tags",
-          icon: Tag
+          href: "/country-details",
+          label: "Country Details",
+          icon: Flag
+        },
+        {
+          href: "/cooperation-list",
+          label: "Cooperation List",
+          icon: Handshake
         },
         {
           href: "/redux-counter",

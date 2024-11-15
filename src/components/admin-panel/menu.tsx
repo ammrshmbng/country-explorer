@@ -15,6 +15,7 @@ import {
   TooltipContent,
   TooltipProvider
 } from "@/components/ui/tooltip";
+import { useState } from "react";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -23,6 +24,10 @@ interface MenuProps {
 export function Menu({ isOpen }: MenuProps) {
   const pathname = usePathname();
   const menuList = getMenuList(pathname);
+  const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
+
+const disabledCountryDetails = pathname.split('/').includes("country-details")
+  
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -53,10 +58,15 @@ export function Menu({ isOpen }: MenuProps) {
               {menus.map(
                 ({ href, label, icon: Icon, active, submenus }, index) =>
                   !submenus || submenus.length === 0 ? (
-                    <div className="w-full" key={index}>
-                      <TooltipProvider disableHoverableContent>
-                        <Tooltip delayDuration={100}>
-                          <TooltipTrigger asChild>
+                    <Button  key={index}
+                    variant="ghost"
+                    className="w-full justify-start h-10 mb-1 hover:bg-transparent"
+                    disabled={disabledCountryDetails ? false  : label === "Country Details"}
+                    >
+                    <div className="w-full " key={index}  >
+                      <TooltipProvider disableHoverableContent  >
+                        <Tooltip delayDuration={100} >
+                          <TooltipTrigger asChild disabled={true}>
                             <Button
                               variant={
                                 (active === undefined &&
@@ -67,8 +77,9 @@ export function Menu({ isOpen }: MenuProps) {
                               }
                               className="w-full justify-start h-10 mb-1"
                               asChild
-                            >
-                              <Link href={href}>
+                             
+                            > 
+                              <Link href={href} >
                                 <span
                                   className={cn(isOpen === false ? "" : "mr-4")}
                                 >
@@ -76,13 +87,15 @@ export function Menu({ isOpen }: MenuProps) {
                                 </span>
                                 <p
                                   className={cn(
-                                    "max-w-[200px] truncate",
+                                    "max-w-[200px] truncate ",
                                     isOpen === false
                                       ? "-translate-x-96 opacity-0"
                                       : "translate-x-0 opacity-100"
+                                      
                                   )}
+                                  
                                 >
-                                  {label}
+                                  {label} 
                                 </p>
                               </Link>
                             </Button>
@@ -95,6 +108,7 @@ export function Menu({ isOpen }: MenuProps) {
                         </Tooltip>
                       </TooltipProvider>
                     </div>
+                    </Button>
                   ) : (
                     <div className="w-full" key={index}>
                       <CollapseMenuButton
