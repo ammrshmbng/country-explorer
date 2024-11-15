@@ -96,6 +96,7 @@ export default function CountryExplorer() {
   const [sortOrder, setSortOrder] = useState("asc")
 
   const { data:countries, isLoading, isError } = useGetCountriesQuery('countries')
+  const [nextPage, setNextPage] = useState(12)
   
 
   // Memoized filtered countries
@@ -106,7 +107,7 @@ export default function CountryExplorer() {
       capital: country.capital,
       population: country.population,
       continent: country.continents
-    })).slice(0, 10)
+    })).slice(0, nextPage)
       .filter((country: any) => country.name.toLowerCase().includes(searchTerm.toLowerCase()))
       .sort((a: any, b: any) => {
         const aValue = a[sortBy as keyof Country]
@@ -119,7 +120,7 @@ export default function CountryExplorer() {
         }
         return 0
       })
-  }, [searchTerm, sortBy, sortOrder, countries])
+  }, [searchTerm, sortBy, sortOrder, countries, nextPage])
 
   // console.log(filteredCountries)
 
@@ -141,6 +142,9 @@ export default function CountryExplorer() {
           />
         ))}
       </div>
+     <div className="flex justify-center mt-6">
+      <Button onClick={() => setNextPage(nextPage + 12)}>Load More ...</Button> 
+     </div>
     </div>
   )
 }
