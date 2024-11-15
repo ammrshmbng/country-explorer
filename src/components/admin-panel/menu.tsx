@@ -60,7 +60,7 @@ const disabledCountryDetails = pathname.split('/').includes("country-details")
                   !submenus || submenus.length === 0 ? (
                     <Button  key={index}
                     variant="ghost"
-                    className="w-full justify-start h-10 mb-1 hover:bg-transparent"
+                    className="w-full justify-start h-10 mb-1 hover:bg-transparent  p-0 "
                     disabled={disabledCountryDetails ? false  : label === "Country Details"}
                     >
                     <div className="w-full " key={index}  >
@@ -75,7 +75,7 @@ const disabledCountryDetails = pathname.split('/').includes("country-details")
                                   ? "secondary"
                                   : "ghost"
                               }
-                              className="w-full justify-start h-10 mb-1"
+                              className="w-full justify-start h-10 mb-1 "
                               asChild
                              
                             > 
