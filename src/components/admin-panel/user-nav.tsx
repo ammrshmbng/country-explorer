@@ -23,7 +23,8 @@ import {
 
 export function UserNav() {
   return (
-    <DropdownMenu>
+    <>
+    {/* <DropdownMenu>
       <TooltipProvider disableHoverableContent>
         <Tooltip delayDuration={100}>
           <TooltipTrigger asChild>
@@ -73,6 +74,7 @@ export function UserNav() {
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
-    </DropdownMenu>
+    </DropdownMenu> */}
+    </>
   );
 }

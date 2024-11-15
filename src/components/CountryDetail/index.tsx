@@ -1,21 +1,27 @@
 'use client'
 
+import { useState, useMemo } from "react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Globe, Map, Users, Landmark, DollarSign, Languages, Award, Handshake } from 'lucide-react'
+import { Globe, Map, Users, Landmark, DollarSign, Languages, Award, Handshake, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 import { useGetCountryDetailsQuery } from "@/lib/features/countriesSlice"
 import { useParams } from "next/navigation"
-import { useMemo } from "react"
+import { useDispatch } from "react-redux"
+import { addCooperation } from "@/lib/features/cooperationSlice"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { selectAllCooperations } from "@/lib/features/cooperationSlice"
+import { useSelector } from "react-redux"
+export default function CountryDetails() {
+  const dispatch = useDispatch()
+  const { id } = useParams()
 
-export default function AustraliaDetails() {
-  const {id} = useParams()
-
-  const {data, isLoading, isError} = useGetCountryDetailsQuery(id)
+  const { data, isLoading, isError } = useGetCountryDetailsQuery(id)
+  const cooperation = useSelector(selectAllCooperations)
 
   const countryDetails = useMemo(() => {
-   return data?.map((country:any)=>{
-    return {
+    return data?.map((country: any) => {
+      return {
         name: country.name.common,
         flag: country.flags.svg,
         capital: country.capital[0],
@@ -27,20 +33,30 @@ export default function AustraliaDetails() {
         gdp: country.gini?.[2014] || 0,
         independent: country.independent,
         googleMaps: country.maps.googleMaps
-    }
-   })
+      }
+    })
   }, [data])
 
+  const [showCooperationDialog, setShowCooperationDialog] = useState(false)
+  const [cooperationResult, setCooperationResult] = useState<boolean | null>(null)
 
   const handleCooperationOffer = () => {
-    // Implement cooperation offer logic here
+    if(cooperation.find((cooperation: any) => cooperation.name === countryDetails[0].name)) {
+      setCooperationResult(false)
+      setShowCooperationDialog(true)
+      return
+    }
+    dispatch(addCooperation(countryDetails[0]))
+    // Simulasi hasil penawaran kerja sama
+    
+    setCooperationResult(true)
+    setShowCooperationDialog(true)
   }
 
   return (
     <div className="p-4">
-      {countryDetails?.map((country:any) => (
+      {countryDetails?.map((country: any) => (
         <div key={country.name}>
-          <h2 className="text-2xl font-bold mb-4">{country.name}</h2>
           <Card>
             <CardHeader>
               <div className="flex items-center gap-4">
@@ -104,6 +120,31 @@ export default function AustraliaDetails() {
           </Card>
         </div>
       ))}
+
+      {/* Modal Dialog */}
+      <Dialog open={showCooperationDialog} onOpenChange={setShowCooperationDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Cooperation Offer Result</DialogTitle>
+          </DialogHeader>
+          <DialogDescription>
+            {cooperationResult ? (
+              <div className="flex items-center gap-2 text-green-600">
+                <Handshake className="w-5 h-5" />
+                <span>Cooperation offer accepted! {countryDetails[0].name} has been added to your cooperation list.</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-red-600">
+                <AlertTriangle className="w-5 h-5" />
+                <span>You already have an existing cooperation offer with {countryDetails?.[0].name}.</span>
+              </div>
+            )}
+          </DialogDescription>
+          <DialogFooter>
+            <Button onClick={() => setShowCooperationDialog(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

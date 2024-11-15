@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useState } from "react";
 
+
 interface MenuProps {
   isOpen: boolean | undefined;
 }
@@ -26,8 +27,10 @@ export function Menu({ isOpen }: MenuProps) {
   const menuList = getMenuList(pathname);
   const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
 
+
+
 const disabledCountryDetails = pathname.split('/').includes("country-details")
-  
+const activeCountries = pathname === "/"
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -69,9 +72,9 @@ const disabledCountryDetails = pathname.split('/').includes("country-details")
                           <TooltipTrigger asChild disabled={true}>
                             <Button
                               variant={
-                                (active === undefined &&
-                                  pathname.startsWith(href)) ||
-                                active
+                                (active === undefined && 
+                               pathname.startsWith(href)  || (href === "/countries" && activeCountries)      )  ||
+                                active 
                                   ? "secondary"
                                   : "ghost"
                               }

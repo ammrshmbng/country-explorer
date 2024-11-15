@@ -24,15 +24,6 @@ type Country = {
   independent: boolean
 }
 
-// Data
-// const countries: Country[] = [
-//   { name: "United States", flag: "/placeholder.svg?height=40&width=60", capital: "Washington, D.C.", population: 331002651, currency: "USD", languages: ["English"], continent: "North America", area: 9833517, gdp: 21433225, independent: true },
-//   { name: "Japan", flag: "/placeholder.svg?height=40&width=60", capital: "Tokyo", population: 126476461, currency: "JPY", languages: ["Japanese"], continent: "Asia", area: 377975, gdp: 5082465, independent: true },
-//   { name: "France", flag: "/placeholder.svg?height=40&width=60", capital: "Paris", population: 67391582, currency: "EUR", languages: ["French"], continent: "Europe", area: 551695, gdp: 2715518, independent: true },
-//   { name: "Brazil", flag: "/placeholder.svg?height=40&width=60", capital: "Brasília", population: 212559417, currency: "BRL", languages: ["Portuguese"], continent: "South America", area: 8515767, gdp: 1839758, independent: true },
-//   { name: "South Africa", flag: "/placeholder.svg?height=40&width=60", capital: "Pretoria", population: 59308690, currency: "ZAR", languages: ["Afrikaans", "English", "Zulu"], continent: "Africa", area: 1221037, gdp: 351432, independent: true },
-//   { name: "Australia", flag: "/placeholder.svg?height=40&width=60", capital: "Canberra", population: 25499884, currency: "AUD", languages: ["English"], continent: "Oceania", area: 7692024, gdp: 1392681, independent: true },
-// ]
 
 // Components
 const CountryCard = ({ country }: { country: Country }) => (
@@ -65,30 +56,33 @@ const SearchSort = ({
   sortOrder: string
   setSortOrder: (value: string) => void
 }) => (
-  <div className="flex flex-col md:flex-row gap-4 mb-4">
+  <div className="flex flex-col md:flex-row gap-4 mb-4 ">
     <div className="flex-grow">
       <Input
         type="text"
         placeholder="Search countries..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full"
+        className="w-full "
       />
     </div>
-    <Select value={sortBy} onValueChange={setSortBy}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Sort by" />
+    
+    <Select value={sortBy} onValueChange={setSortBy}  >
+      <SelectTrigger className="md:w-[180px] w-full">
+        <SelectValue placeholder="Sort by " />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent  >
         <SelectItem value="name">Name</SelectItem>
         <SelectItem value="population">Population</SelectItem>
         <SelectItem value="area">Area</SelectItem>
         <SelectItem value="gdp">GDP</SelectItem>
       </SelectContent>
     </Select>
+    
     <Button
       variant="outline"
       onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+      
     >
       {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
     </Button>

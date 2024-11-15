@@ -13,7 +13,7 @@ import CountryDetail from "@/components/CountryDetail";
 
 export default function TagsPage() {
   return (
-    <ContentLayout title="Tags">
+    <ContentLayout title="Country Details">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

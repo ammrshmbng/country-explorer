@@ -31,6 +31,7 @@ export function getMenuList(pathname: string): Group[] {
     {
       groupLabel: "Menus",
       menus: [
+        
        
         {
           href: "/countries",
@@ -46,11 +47,6 @@ export function getMenuList(pathname: string): Group[] {
           href: "/cooperation-list",
           label: "Cooperation List",
           icon: Handshake
-        },
-        {
-          href: "/redux-counter",
-          label: "Redux Counter",
-          icon: Calculator
         }
       ]
     },

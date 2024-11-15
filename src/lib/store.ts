@@ -1,11 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./services/apiSlice";
-import counterReducer from "./features/counterSlice";
-
+import cooperationReducer from "./features/cooperationSlice";
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        counter: counterReducer
+        cooperation: cooperationReducer
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(apiSlice.middleware)
 })

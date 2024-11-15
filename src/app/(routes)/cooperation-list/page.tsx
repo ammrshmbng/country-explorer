@@ -9,7 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
-import PlaceholderContent from "@/components/demo/placeholder-content";
+import CooperationList from "@/components/CooperationList";
 
 export default function CooperationListPage() {
   return (
@@ -28,7 +28,7 @@ export default function CooperationListPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <CooperationList />
     </ContentLayout>
   );
 }
