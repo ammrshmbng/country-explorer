@@ -24,7 +24,7 @@ export default function CooperationListPage() {
           <BreadcrumbSeparator />
           
           <BreadcrumbItem>
-            <BreadcrumbPage>cooperation list</BreadcrumbPage>
+            <BreadcrumbPage>Cooperation List</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
