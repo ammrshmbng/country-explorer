@@ -12,11 +12,13 @@ export const cooperationSlice = createSlice({
         addCooperation: (state, action) => {
             state.push(action.payload);
         },
-        
+        removeCooperation: (state, action) => {
+            return state.filter((country: any) => country.name !== action.payload);
+        }
     }
 });
 
-export const { addCooperation} = cooperationSlice.actions;
+export const { addCooperation, removeCooperation} = cooperationSlice.actions;
 
 export const selectAllCooperations = (state: any) => state.cooperation;
 
