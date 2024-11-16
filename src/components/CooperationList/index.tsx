@@ -48,8 +48,8 @@ export default function CooperationAgreements() {
                       className="rounded"
                     />
                     <div>
-                      <CardTitle className="text-lg font-semibold">
-                        {country.name}
+                      <CardTitle className="text-lg font-semibold dark:text-gray-500">
+                        {country.name} 
                       </CardTitle>
                       <p className="text-xs text-gray-500">{country.capital}</p>
                     </div>
@@ -67,13 +67,13 @@ export default function CooperationAgreements() {
                 <div className="space-y-2">
                   <div className="flex items-center space-x-2">
                     <Users className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                    <span className="text-sm">
+                    <span className="text-sm dark:text-gray-500">
                       Pop: {country.population.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <DollarSign className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                    <span className="text-sm">
+                    <span className="text-sm dark:text-gray-500">
                       Currency: {country.currency}
                     </span>
                   </div>
