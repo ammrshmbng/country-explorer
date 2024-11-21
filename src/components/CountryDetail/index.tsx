@@ -3,12 +3,12 @@
 import { useState, useMemo } from "react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Globe, Map, Users, Landmark, DollarSign, Languages, Award, Handshake, AlertTriangle } from 'lucide-react'
+import { Globe, Map, Users, Landmark, DollarSign, Languages, Award, Handshake, AlertTriangle, Ban } from 'lucide-react'
 import Image from 'next/image'
 import { useGetCountryDetailsQuery } from "@/lib/features/countriesSlice"
 import { useParams } from "next/navigation"
 import { useDispatch } from "react-redux"
-import { addCooperation } from "@/lib/features/cooperationSlice"
+import { addCooperation, removeCooperation } from "@/lib/features/cooperationSlice"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { selectAllCooperations } from "@/lib/features/cooperationSlice"
 import { useSelector } from "react-redux"
@@ -36,6 +36,7 @@ export default function CountryDetails() {
       }
     })
   }, [data])
+
 
   const [showCooperationDialog, setShowCooperationDialog] = useState(false)
   const [cooperationResult, setCooperationResult] = useState<boolean | null>(null)
@@ -112,10 +113,19 @@ export default function CountryDetails() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" onClick={handleCooperationOffer}>
-                <Handshake className="w-5 h-5 mr-2" />
-                Offer Cooperation
-              </Button>
+              {
+                cooperationResult ? 
+                <Button className="w-full bg-red-500" onClick={()=>{dispatch(removeCooperation(countryDetails[0].name)) 
+                  setCooperationResult(false)
+                }}>
+                  <Ban className="w-5 h-5 mr-2" />
+                  Cancel Cooperation
+                </Button> :
+                <Button className="w-full" onClick={handleCooperationOffer}>
+                  <Handshake className="w-5 h-5 mr-2" />
+                  Offer Cooperation
+                </Button>
+              }
             </CardFooter>
           </Card>
         </div>
