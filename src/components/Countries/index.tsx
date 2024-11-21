@@ -100,8 +100,8 @@ export default function CountryExplorer() {
   
 
   // Memoized filtered countries
-  const filteredCountries = useMemo(() => {
-    return countries?.map((country: any) => ({
+  const filteredCountries = 
+     countries?.map((country: any) => ({
       name: country.name.common,
       flag: country.flags.png,
       capital: country.capital,
@@ -120,7 +120,7 @@ export default function CountryExplorer() {
         }
         return 0
       })
-  }, [searchTerm, sortBy, sortOrder, countries, nextPage])
+  
 
   console.log(filteredCountries)
 
