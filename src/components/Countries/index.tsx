@@ -96,7 +96,7 @@ export default function CountryExplorer() {
   const [sortOrder, setSortOrder] = useState("asc")
 
   const { data:countries, isLoading, isError } = useGetCountriesQuery('countries')
-  const [nextPage, setNextPage] = useState(12)
+  const [nextPage, setNextPage] = useState(240)
   
 
   // Memoized filtered countries
@@ -122,7 +122,7 @@ export default function CountryExplorer() {
       })
   }, [searchTerm, sortBy, sortOrder, countries, nextPage])
 
-  // console.log(filteredCountries)
+  console.log(filteredCountries)
 
   return (
     <div className="p-4  min-h-screen">
@@ -143,7 +143,11 @@ export default function CountryExplorer() {
         ))}
       </div>
      <div className="flex justify-center mt-6">
-      <Button onClick={() => setNextPage(nextPage + 12)}>Load More ...</Button> 
+  
+      {
+        nextPage ===250 ? <p className="text-center text-gray-500">No more countries to load</p> : 
+        <Button onClick={() => setNextPage(nextPage + 10)}>Load More ...</Button>  
+      }
      </div>
     </div>
   )
